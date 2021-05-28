@@ -20,25 +20,54 @@ class Node:
             #time.sleep(0.01)
     def move_all(self, direction, child):
         if direction == "right":
-            self.window.move(self.obj, -75, -50)
+            for i in range(0, 75):
+                if i<=50:
+                    self.window.move(self.obj, -1, -1)
+                    self.window.move(self.key_obj, -1, -1)
+                    time.sleep(0.01)
+                    self.window.update()
+                else:
+                    self.window.move(self.obj, -1, 0)
+                    self.window.move(self.key_obj, -1, 0)
+                    time.sleep(0.01)
+                    self.window.update()
             self.window.move(self.arrow, -75, -50)
-            self.window.move(self.key_obj, -75, -50)
             if self.left != None:
                 self.left.move_all("right")
             if self.right != None:
                 self.right.move_all("right")
         if direction == "left":
-            self.window.move(self.obj, 75, -50)
+            for i in range(0, 75):
+                if i<=50:
+                    self.window.move(self.obj, 1, -1)
+                    self.window.move(self.key_obj, 1, -1)
+                    time.sleep(0.01)
+                    self.window.update()
+                else:
+                    self.window.move(self.obj, 1, 0)
+                    self.window.move(self.key_obj, 1, 0)
+                    time.sleep(0.01)
+                    self.window.update()
             self.window.move(self.arrow, 75, -50)
-            self.window.move(self.key_obj, 75, -50)
+
             if self.left != None:
                 self.left.move_all("left")
             if self.right != None:
                 self.right.move_all("left")
         if direction == "left-up":
-            self.window.move(self.obj, -75, -50)
+            for i in range(0, 75):
+                if i<=50:
+                    self.window.move(self.obj, -1, -1)
+                    self.window.move(self.key_obj, -1, -1)
+                    time.sleep(0.01)
+                    self.window.update()
+                else:
+                    self.window.move(self.obj, -1, 0)
+                    self.window.move(self.key_obj, -1, 0)
+                    time.sleep(0.01)
+                    self.window.update()
             self.window.move(self.arrow, -75, -50)
-            self.window.move(self.key_obj, -75, -50)
+
             coords = self.window.coords(self.arrow)
             if self.up == None:
                 self.window.delete(self.arrow)
@@ -52,9 +81,17 @@ class Node:
             if self.left != None and child == True:
                 self.left.move_all("left-up", True)
         if direction == "left-down":
-            self.window.move(self.obj, -75, 50)
-            self.window.move(self.key_obj, -75, 50)
-            print(self.key)
+            for i in range(0, 75):
+                if i <= 50:
+                    self.window.move(self.obj, -1, 1)
+                    self.window.move(self.key_obj, -1, 1)
+                    time.sleep(0.01)
+                    self.window.update()
+                else:
+                    self.window.move(self.obj, -1, 0)
+                    self.window.move(self.key_obj, -1, 0)
+                    time.sleep(0.01)
+                    self.window.update()
             #time.sleep(3)
             if self.arrow != None:
                 self.window.move(self.arrow, -75, 50)
@@ -73,9 +110,18 @@ class Node:
             if self.right != None and child == True:
                 self.right.move_all("left-down", True)
         if direction == "right-up":
-            self.window.move(self.obj, 75, -50)
+            for i in range(0, 75):
+                if i <= 50:
+                    self.window.move(self.obj, 1, -1)
+                    self.window.move(self.key_obj, 1, -1)
+                    time.sleep(0.01)
+                    self.window.update()
+                else:
+                    self.window.move(self.obj, 1, 0)
+                    self.window.move(self.key_obj, 1, 0)
+                    time.sleep(0.01)
+                    self.window.update()
             self.window.move(self.arrow, 75, -50)
-            self.window.move(self.key_obj, 75, -50)
             coords = self.window.coords(self.arrow)
             if self.up == None:
                 self.window.delete(self.arrow)
@@ -89,8 +135,17 @@ class Node:
             if self.right != None and child == True:
                 self.right.move_all("right-up", True)
         if direction == "right-down":
-            self.window.move(self.obj, 75, 50)
-            self.window.move(self.key_obj, 75, 50)
+            for i in range(0, 75):
+                if i <= 50:
+                    self.window.move(self.obj, 1, 1)
+                    self.window.move(self.key_obj, 1, 1)
+                    time.sleep(0.01)
+                    self.window.update()
+                else:
+                    self.window.move(self.obj, 1, 0)
+                    self.window.move(self.key_obj, 1, 0)
+                    time.sleep(0.01)
+                    self.window.update()
             if self.arrow != None:
                 self.window.move(self.arrow, 75, 50)
                 coords = self.window.coords(self.arrow)
@@ -119,8 +174,9 @@ class RedBlackTree:
     root = None
     number_of_nodes=0
     def rotate_left(self, node):
-        #time.sleep(2)
-        print("rotating left:" + str(node.key))
+        text = self.window.create_text(50, 50, text="Rotating left:"+str(node.key))
+        self.window.update()
+        time.sleep(1)
         if node == self.root:
             self.root=node.right
         elif node == node.up.left:
@@ -130,10 +186,6 @@ class RedBlackTree:
         node.right.up = node.up
         node.up = node.right
         node.right = node.up.left
-        if node.up.left != None:
-            print("here"+str(node.up.left.key))
-        if node.right != None:
-            print("node right:"+ str(node.right.key))
         if node.up.left != None:
             node.up.left.up = node
             self.window.delete(node.up.left.arrow)
@@ -146,9 +198,14 @@ class RedBlackTree:
         node.move_all("left-down", False)
         node.up.move_all("left-up", False)
         self.window.update()
-        print("rotation completed")
+        self.window.delete(text)
+        self.window.update()
+        time.sleep(1)
 
     def rotate_right(self, node):
+        text = self.window.create_text(50, 50, text="Rotating right:" + str(node.key))
+        self.window.update()
+        time.sleep(1)
 
         if node == self.root:
             self.root = node.left
@@ -171,6 +228,9 @@ class RedBlackTree:
         node.move_all("right-down", False)
         node.up.move_all("right-up", False)
         self.window.update()
+        self.window.delete(text)
+        self.window.update()
+        time.sleep(1)
 
     def check(self, node):
         if node.up != None and node.up.up != None and node.up.color=='r' and node.color == 'r':
@@ -235,7 +295,6 @@ class RedBlackTree:
         node.obj = node.window.create_oval(50, 50, 100, 100)
         node.key_obj = self.window.create_text(75, 75, text=str(key))
         self.window.itemconfig(node.obj, fill = 'red')
-        #pom->element_w_liscie=liczba_elementow;
         if self.root == None:
             node.move(400, 100, 1, 1)
             self.root = node

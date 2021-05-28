@@ -520,7 +520,8 @@ class BTree:
                 self.window.delete(current.obj)
                 NT.up = None
                 self.root = NT
-                self.root.leaf = True
+                if NT.nodes[0].left==None:
+                    self.root.leaf = True
             self_coords = self.window.coords(NT.obj)
             left_coords = self.window.coords(NT.left.obj)
             self.window.delete(NT.left.obj)
@@ -598,7 +599,8 @@ class BTree:
                 self.window.delete(current.obj)
                 NT.up = None
                 self.root = NT
-                self.root.leaf = True
+                if NT.nodes[0].left==None:
+                    self.root.leaf = True
             self_coords = self.window.coords(NT.obj)
             right_coords = self.window.coords(NT.right.obj)
             self.window.delete(NT.right.obj)
@@ -629,7 +631,7 @@ class BTree:
                 po.move(12.5, 0, 0.5, 0.5)
                 po = po.right
             self.window.update()
-            time.sleep(4)
+            #time.sleep(4)
             NT.align()
             self.window.update()
             NT.create_lines()
@@ -643,7 +645,7 @@ class BTree:
             self.root.nodes = []
             self.root.nodes.append(new_element)
             self.root.nodes_num+=1
-            self.root.max_degree = 5
+            self.root.max_degree = 3
             self.root.min_degree = self.root.max_degree/2
             if self.root.max_degree % 2 == 0:
                 self.root.min_degree -=1
@@ -695,13 +697,13 @@ class BTree:
             for i in range(0, current.nodes_num):
                 self.window.itemconfig(current.nodes[i].key_obj, fill='red')
                 self.window.update()
-                time.sleep(1)
+                #time.sleep(1)
                 if current.nodes[i].key == key:
                     found = current.nodes[i]
                     break
                 self.window.itemconfig(current.nodes[i].key_obj, fill='black')
                 self.window.update()
-                time.sleep(1)
+                #time.sleep(1)
                 if current.nodes[i].key > key:
                     current = current.nodes[i].left
                     break
@@ -711,20 +713,20 @@ class BTree:
         if found == None:
             text = self.window.create_text(50, 50, text="Node not found")
             self.window.update()
-            time.sleep(1)
+            #time.sleep(1)
             self.window.delete(text)
             self.window.update()
-            time.sleep(1)
+            #time.sleep(1)
             return None
         else:
             text = self.window.create_text(50, 50, text="Node found")
             self.window.itemconfig(found.key_obj, fill='red')
             self.window.update()
-            time.sleep(1)
+            #time.sleep(1)
             self.window.itemconfig(found.key_obj, fill='black')
             self.window.delete(text)
             self.window.update()
-            time.sleep(1)
+            #time.sleep(1)
             return current
 
 
@@ -772,6 +774,11 @@ class BTree:
                 elif current.right != None and current.right.up == current.up and current.right.nodes_num > current.min_degree:
                     current.borrow_from_right_leaf()
                     self.delete_node(key)
+                elif current==self.root and current.nodes_num==1:
+                    self.window.delete(current.nodes[0].key_obj)
+                    self.window.delete(current.obj)
+                    del current.nodes[0]
+                    self.root=None
                 else:
                     self.borrow_from_parent_leaf(current)
                     #if current.up.nodes_num == 0 and current.up == self.root:
@@ -779,9 +786,10 @@ class BTree:
                       #  current.up = None
                        # self.root = current
                     self.delete_node(key)
-                current.delete_lines()
-                current.align()
-                current.create_lines()
+                if self.root!=None:
+                    current.delete_lines()
+                    current.align()
+                    current.create_lines()
             else:
                 predecessor = self.find_predecessor(current.nodes[it])
                 successor = self.find_successor(current.nodes[it])
@@ -802,8 +810,6 @@ class BTree:
                 else:
                     self.borrow_from_parent_leaf(successor)
                     self.delete_node(key)
-
-
 
 
     def show_min(self):

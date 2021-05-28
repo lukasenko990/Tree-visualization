@@ -6,10 +6,8 @@ class Node:
     key, left, right, up, window, obj, key_obj, arrow = None, None, None, None, None, None, None, None
     def move(self, x_distance, y_distance, x_velovity, y_velocity):
         coordinates = self.window.coords(self.obj)
-        #print(coordinates)
         while coordinates[2]!=x_distance or coordinates[3]!=y_distance:
             coordinates = self.window.coords(self.obj)
-            #print(coordinates)
             if coordinates[2]==x_distance:
                 x_velovity=0
             if coordinates[3]==y_distance:
@@ -18,103 +16,161 @@ class Node:
             self.window.move(self.key_obj, x_velovity, y_velocity)
             self.window.update()
             #time.sleep(0.01)
+
     def move_all(self, direction, child):
         if direction == "right":
-            self.window.move(self.obj, -75, -50)
+            for i in range(0, 75):
+                if i <= 50:
+                    self.window.move(self.obj, -1, -1)
+                    self.window.move(self.key_obj, -1, -1)
+                    time.sleep(0.01)
+                    self.window.update()
+                else:
+                    self.window.move(self.obj, -1, 0)
+                    self.window.move(self.key_obj, -1, 0)
+                    time.sleep(0.01)
+                    self.window.update()
             self.window.move(self.arrow, -75, -50)
-            self.window.move(self.key_obj, -75, -50)
             if self.left != None:
                 self.left.move_all("right")
             if self.right != None:
                 self.right.move_all("right")
         if direction == "left":
-            self.window.move(self.obj, 75, -50)
+            for i in range(0, 75):
+                if i <= 50:
+                    self.window.move(self.obj, 1, -1)
+                    self.window.move(self.key_obj, 1, -1)
+                    time.sleep(0.01)
+                    self.window.update()
+                else:
+                    self.window.move(self.obj, 1, 0)
+                    self.window.move(self.key_obj, 1, 0)
+                    time.sleep(0.01)
+                    self.window.update()
             self.window.move(self.arrow, 75, -50)
-            self.window.move(self.key_obj, 75, -50)
+
             if self.left != None:
                 self.left.move_all("left")
             if self.right != None:
                 self.right.move_all("left")
         if direction == "left-up":
-            self.window.move(self.obj, -75, -50)
+            for i in range(0, 75):
+                if i <= 50:
+                    self.window.move(self.obj, -1, -1)
+                    self.window.move(self.key_obj, -1, -1)
+                    time.sleep(0.01)
+                    self.window.update()
+                else:
+                    self.window.move(self.obj, -1, 0)
+                    self.window.move(self.key_obj, -1, 0)
+                    time.sleep(0.01)
+                    self.window.update()
             self.window.move(self.arrow, -75, -50)
-            self.window.move(self.key_obj, -75, -50)
+
             coords = self.window.coords(self.arrow)
             if self.up == None:
                 self.window.delete(self.arrow)
                 self.arrow = None
             elif coords[2] > coords[0] and self != None and self == self.up.left:
                 self.window.delete(self.arrow)
-                arrow = self.window.create_line(coords[0]+100, coords[1], coords[2], coords[3], arrow=tkinter.LAST)
-                self.arrow=arrow
+                arrow = self.window.create_line(coords[0] + 100, coords[1], coords[2], coords[3], arrow=tkinter.LAST)
+                self.arrow = arrow
             if self.right != None:
                 self.right.move_all("left-up", True)
             if self.left != None and child == True:
                 self.left.move_all("left-up", True)
         if direction == "left-down":
-            self.window.move(self.obj, -75, 50)
-            self.window.move(self.key_obj, -75, 50)
-            print(self.key)
-            #time.sleep(3)
+            for i in range(0, 75):
+                if i <= 50:
+                    self.window.move(self.obj, -1, 1)
+                    self.window.move(self.key_obj, -1, 1)
+                    time.sleep(0.01)
+                    self.window.update()
+                else:
+                    self.window.move(self.obj, -1, 0)
+                    self.window.move(self.key_obj, -1, 0)
+                    time.sleep(0.01)
+                    self.window.update()
+            # time.sleep(3)
             if self.arrow != None:
                 self.window.move(self.arrow, -75, 50)
                 coords = self.window.coords(self.arrow)
-                print(coords)
                 if coords[2] > coords[0] and self.up != None and self == self.up.left:
                     self.window.delete(self.arrow)
-                    arrow = self.window.create_line(coords[0]+100, coords[1], coords[2], coords[3], arrow=tkinter.LAST)
+                    arrow = self.window.create_line(coords[0] + 100, coords[1], coords[2], coords[3],
+                                                    arrow=tkinter.LAST)
                     self.arrow = arrow
             else:
                 coordinates = self.window.coords(self.obj)
-                arrow = self.window.create_line(350, 75,coordinates[2]-25, coordinates[3]-50, arrow=tkinter.LAST)
-                self.arrow=arrow
+                arrow = self.window.create_line(350, 75, coordinates[2] - 25, coordinates[3] - 50, arrow=tkinter.LAST)
+                self.arrow = arrow
             if self.left != None:
                 self.left.move_all("left-down", True)
             if self.right != None and child == True:
                 self.right.move_all("left-down", True)
         if direction == "right-up":
-            self.window.move(self.obj, 75, -50)
+            for i in range(0, 75):
+                if i <= 50:
+                    self.window.move(self.obj, 1, -1)
+                    self.window.move(self.key_obj, 1, -1)
+                    time.sleep(0.01)
+                    self.window.update()
+                else:
+                    self.window.move(self.obj, 1, 0)
+                    self.window.move(self.key_obj, 1, 0)
+                    time.sleep(0.01)
+                    self.window.update()
             self.window.move(self.arrow, 75, -50)
-            self.window.move(self.key_obj, 75, -50)
             coords = self.window.coords(self.arrow)
             if self.up == None:
                 self.window.delete(self.arrow)
                 self.arrow = None
             elif coords[2] < coords[0] and self == self.up.right:
                 self.window.delete(self.arrow)
-                arrow = self.window.create_line(coords[0]-100, coords[1], coords[2], coords[3], arrow=tkinter.LAST)
+                arrow = self.window.create_line(coords[0] - 100, coords[1], coords[2], coords[3], arrow=tkinter.LAST)
                 self.arrow = arrow
             if self.left != None:
                 self.left.move_all("right-up", True)
             if self.right != None and child == True:
                 self.right.move_all("right-up", True)
         if direction == "right-down":
-            self.window.move(self.obj, 75, 50)
-            self.window.move(self.key_obj, 75, 50)
+            for i in range(0, 75):
+                if i <= 50:
+                    self.window.move(self.obj, 1, 1)
+                    self.window.move(self.key_obj, 1, 1)
+                    time.sleep(0.01)
+                    self.window.update()
+                else:
+                    self.window.move(self.obj, 1, 0)
+                    self.window.move(self.key_obj, 1, 0)
+                    time.sleep(0.01)
+                    self.window.update()
             if self.arrow != None:
                 self.window.move(self.arrow, 75, 50)
                 coords = self.window.coords(self.arrow)
                 if coords[2] < coords[0] and self == self.up.right:
                     self.window.delete(self.arrow)
-                    arrow = self.window.create_line(coords[0]-100, coords[1], coords[2], coords[3], arrow=tkinter.LAST)
+                    arrow = self.window.create_line(coords[0] - 100, coords[1], coords[2], coords[3],
+                                                    arrow=tkinter.LAST)
                     self.arrow = arrow
             else:
                 coordinates = self.window.coords(self.obj)
                 arrow = self.window.create_line(400, 75, coordinates[2] - 25, coordinates[3] - 50, arrow=tkinter.LAST)
                 self.arrow = arrow
             if self.right != None:
-                print(self.right.key)
                 self.right.move_all("right-down", True)
             if self.left != None and child == True:
                 self.left.move_all("right-down", True)
             self.window.update()
-
 
 class SplayTree:
     window = None
     root = None
     def rotate_left(self, node):
         #time.sleep(2)
+        text = self.window.create_text(50, 50, text="Rotating left:" + str(node.key))
+        self.window.update()
+        time.sleep(1)
         if node == self.root:
             self.root=node.right
         elif node == node.up.left:
@@ -134,9 +190,14 @@ class SplayTree:
         node.move_all("left-down", False)
         node.up.move_all("left-up", False)
         self.window.update()
-        print("rotation completed")
+        self.window.delete(text)
+        self.window.update()
+        time.sleep(1)
 
     def rotate_right(self, node):
+        text = self.window.create_text(50, 50, text="Rotating right:" + str(node.key))
+        self.window.update()
+        time.sleep(1)
 
         if node == self.root:
             self.root = node.left
@@ -157,6 +218,9 @@ class SplayTree:
         node.move_all("right-down", False)
         node.up.move_all("right-up", False)
         self.window.update()
+        self.window.delete(text)
+        self.window.update()
+        time.sleep(1)
     def splay(self, node):
         while node != self.root:
             if node.up.up != None and node == node.up.left and node.up == node.up.up.left:

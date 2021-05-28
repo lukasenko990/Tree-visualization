@@ -7,10 +7,8 @@ class Node:
     key, left, right, up, window, obj, key_obj, arrow= None, None, None, None, None, None, None, None
     def move(self, x_distance, y_distance, x_velovity, y_velocity):
         coordinates = self.window.coords(self.obj)
-        #print(coordinates)
         while coordinates[2]!=x_distance or coordinates[3]!=y_distance:
             coordinates = self.window.coords(self.obj)
-            #print(coordinates)
             if coordinates[2]==x_distance:
                 x_velovity=0
             if coordinates[3]==y_distance:
@@ -18,7 +16,7 @@ class Node:
             self.window.move(self.obj, x_velovity, y_velocity)
             self.window.move(self.key_obj, x_velovity, y_velocity)
             self.window.update()
-            #time.sleep(0.01)
+            time.sleep(0.01)
     def move_all(self, direction):
         if direction == "right":
             self.window.move(self.obj, -75, -50)
@@ -59,33 +57,33 @@ class BstTree:
                     text=self.window.create_text(coordinates[2] + 50, coordinates[3] - 25, text=str(key) + " >= " + str(current.key))
                     self.window.itemconfig(current.obj, fill='red')
                     self.window.update()
-                    #time.sleep(1)
+                    time.sleep(1)
                     self.window.itemconfig(current.obj, fill='white')
                     self.window.delete(text)
                     self.window.update()
-                    #time.sleep(1)
+                    time.sleep(1)
                     current = current.right
                 else:
                     coordinates = self.window.coords(current.obj)
                     text=self.window.create_text(coordinates[2] - 100, coordinates[3] - 25, text=str(key) + " <= " + str(current.key))
                     self.window.itemconfig(current.obj, fill='red')
                     self.window.update()
-                    #time.sleep(1)
+                    time.sleep(1)
                     self.window.itemconfig(current.obj, fill='white')
                     self.window.delete(text)
                     self.window.update()
-                    #time.sleep(1)
+                    time.sleep(1)
                     current = current.left
             if current.key <= key:
                 coordinates = self.window.coords(current.obj)
                 text=self.window.create_text(coordinates[2] + 50, coordinates[3] - 25,text=str(key) + " >= " + str(current.key))
                 self.window.itemconfig(current.obj, fill='red')
                 self.window.update()
-                #time.sleep(1)
+                time.sleep(1)
                 self.window.delete(text)
                 self.window.itemconfig(current.obj, fill='white')
                 self.window.update()
-                #time.sleep(1)
+                time.sleep(1)
                 new_element.move(coordinates[2] + 75, coordinates[3] + 50, 1, 1)
                 arrow=self.window.create_line(coordinates[2], (coordinates[3]+coordinates[1])/2,coordinates[2] + 50, coordinates[3], arrow=tkinter.LAST)
                 new_element.arrow=arrow
@@ -96,11 +94,11 @@ class BstTree:
                 text=self.window.create_text(coordinates[2] - 100, coordinates[3] - 25, text=str(key) + " <= " + str(current.key))
                 self.window.itemconfig(current.obj, fill='red')
                 self.window.update()
-                #time.sleep(1)
+                time.sleep(1)
                 self.window.itemconfig(current.obj, fill='white')
                 self.window.delete(text)
                 self.window.update()
-                #time.sleep(1)
+                time.sleep(1)
                 new_element.move(coordinates[2] - 75, coordinates[3] + 50, 1, 1)
                 arrow=self.window.create_line(coordinates[0], (coordinates[3]+coordinates[1])/2, coordinates[2] - 100, coordinates[3], arrow=tkinter.LAST)
                 new_element.arrow=arrow
@@ -180,12 +178,11 @@ class BstTree:
             self.window.itemconfig(current.obj, fill='red')
             text = self.window.create_text(100, 50, text="Minimum key in this tree is: " + str(current.key))
             self.window.update()
-            time.sleep(5)
+            time.sleep(3)
             self.window.itemconfig(current.obj, fill='white')
             self.window.delete(text)
             self.window.update()
             time.sleep(1)
-            print(current.key)
 
     def show_max(self):
         if self.root == None:
@@ -208,12 +205,11 @@ class BstTree:
             self.window.itemconfig(current.obj, fill='red')
             text = self.window.create_text(100, 50, text="Maximum key in this tree is: " + str(current.key))
             self.window.update()
-            time.sleep(5)
+            time.sleep(3)
             self.window.itemconfig(current.obj, fill='white')
             self.window.delete(text)
             self.window.update()
             time.sleep(1)
-            print(current.key)
     def delete_node(self, key):
         current=self.find_element(key)
         if current == None:
